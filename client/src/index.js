@@ -8,6 +8,9 @@ import "antd/dist/reset.css";
 import { ConfigProvider } from "antd";
 import Signup from "./pages/Signup";
 import AdminSignup from "./pages/AdminSignup";
+import ForgotPassword from "./pages/ForgotPassword";
+import Dashboard from "./pages/Dashboard";
+import AppProvider from "./providers/App";
 
 const router = createBrowserRouter([
   {
@@ -30,20 +33,30 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#E07C24",
-        },
-      }}
-    >
-      <RouterProvider router={router} />
-    </ConfigProvider>
+    <AppProvider>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#E07C24",
+          },
+        }}
+      >
+        <RouterProvider router={router} />
+      </ConfigProvider>
+    </AppProvider>
   </React.StrictMode>
 );
