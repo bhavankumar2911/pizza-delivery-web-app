@@ -11,6 +11,7 @@ import AdminSignup from "./pages/AdminSignup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import AppProvider from "./providers/App";
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
 ]);
 
