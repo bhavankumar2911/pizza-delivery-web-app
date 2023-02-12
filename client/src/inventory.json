@@ -1,0 +1,58 @@
+{
+  "base": [
+    {
+      "item": "Thin",
+      "quantity": 20
+    },
+    {
+      "item": "Thick",
+      "quantity": 100
+    },
+    {
+      "item": "Stuffed",
+      "quantity": 46
+    }
+  ],
+  "sauce": [
+    {
+      "item": "Pesto",
+      "quantity": 56
+    },
+    {
+      "item": "White Garlic",
+      "quantity": 89
+    },
+    {
+      "item": "Garlic Ranch",
+      "quantity": 23
+    },
+    {
+      "item": "Buffalo",
+      "quantity": 500
+    }
+  ],
+  "cheese": [
+    {
+      "item": "Mozzarella",
+      "quantity": 500
+    },
+    {
+      "item": "Cheddar",
+      "quantity": 500
+    },
+    {
+      "item": "Parmesan",
+      "quantity": 500
+    },
+    {
+      "item": "Goat Cheese",
+      "quantity": 500
+    }
+  ],
+  "extras": [
+    {
+      "item": "Veggies",
+      "quantity": 500
+    }
+  ]
+}

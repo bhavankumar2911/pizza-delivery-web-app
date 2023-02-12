@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import AdminSignup from "./pages/AdminSignup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
+import Inventory from "./pages/Inventory";
 import AppProvider from "./providers/App";
 import Cart from "./pages/Cart";
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/admin/inventory",
+    element: <Inventory />,
   },
 ]);
 

@@ -11,27 +11,29 @@ const Cart = () => {
   return (
     <main>
       <Container>
-        <br />
-        <br />
-        <br />
-        <center>
-          <Typography.Title level={3}>Your Cart</Typography.Title>
-        </center>
+        <div style={{ maxWidth: "400px", margin: "0 auto" }}>
+          <br />
+          <br />
+          <br />
+          <center>
+            <Typography.Title level={3}>Your Cart</Typography.Title>
+          </center>
 
-        <List
-          itemLayout="horizontal"
-          dataSource={cart}
-          renderItem={(item) => <CartItem item={item} />}
-        />
+          <List
+            itemLayout="horizontal"
+            dataSource={cart}
+            renderItem={(item) => <CartItem item={item} />}
+          />
 
-        <Button
-          style={{ marginTop: "2rem" }}
-          icon={<ShoppingCartOutlined />}
-          type="primary"
-          block
-        >
-          Checkout
-        </Button>
+          <Button
+            style={{ marginTop: "2rem" }}
+            icon={<ShoppingCartOutlined />}
+            type="primary"
+            block
+          >
+            Checkout
+          </Button>
+        </div>
       </Container>
     </main>
   );
