@@ -60,7 +60,7 @@ const PizzaCard = ({ pizza }) => {
   };
 
   const addItemToCart = () => {
-    addToCart({ ...pizza, base, sauce, cheese, wantVeggies });
+    addToCart({ ...pizza, base, sauce, cheese, wantVeggies, quantity: 1 });
     setIsModalOpen(false);
   };
 

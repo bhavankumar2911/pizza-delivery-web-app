@@ -37,8 +37,44 @@ const AppProvider = ({ children }) => {
     setCart(newCart);
   };
 
+  // quantity updation
+  const updateQuantity = (id, updation) => {
+    if (updation == "increase") {
+      const newCart = [
+        ...cart.map((item) => {
+          if (item.id == id) {
+            return { ...item, quantity: item.quantity + 1 };
+          }
+          return { ...item };
+        }),
+      ];
+      setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    } else {
+      const previousQuantity = cart.filter((item) => item.id == id)[0][
+        "quantity"
+      ];
+      if (previousQuantity == 1) {
+        return removeFromCart(id);
+      } else {
+        const newCart = [
+          ...cart.map((item) => {
+            if (item.id == id) {
+              return { ...item, quantity: item.quantity - 1 };
+            }
+            return { ...item };
+          }),
+        ];
+        setCart(newCart);
+        localStorage.setItem("cart", JSON.stringify(newCart));
+      }
+    }
+  };
+
   return (
-    <Context.Provider value={{ cart, addToCart, removeFromCart }}>
+    <Context.Provider
+      value={{ cart, addToCart, removeFromCart, updateQuantity }}
+    >
       {children}
     </Context.Provider>
   );
