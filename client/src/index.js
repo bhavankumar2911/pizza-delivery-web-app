@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
 import AppProvider from "./providers/App";
 import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/inventory",
     element: <Inventory />,
+  },
+  {
+    path: "/admin/orders",
+    element: <Orders />,
   },
 ]);
 
