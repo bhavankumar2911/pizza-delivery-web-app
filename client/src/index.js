@@ -14,6 +14,18 @@ import Inventory from "./pages/Inventory";
 import AppProvider from "./providers/App";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
+import axios from "axios";
+import { QueryClient, QueryClientProvider } from "react-query";
+import VerifyEmail from "./pages/VerifyEmail";
+
+const queryClient = new QueryClient();
+
+axios.interceptors.request.use((request) => {
+  request.baseURL = "http://localhost:9000";
+  request.withCredentials = true;
+
+  return request;
+});
 
 const router = createBrowserRouter([
   {
@@ -56,22 +68,28 @@ const router = createBrowserRouter([
     path: "/admin/orders",
     element: <Orders />,
   },
+  {
+    path: "/verify/:id",
+    element: <VerifyEmail />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <AppProvider>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "#E07C24",
-          },
-        }}
-      >
-        <RouterProvider router={router} />
-      </ConfigProvider>
-    </AppProvider>
+    <QueryClientProvider client={queryClient}>
+      <AppProvider>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#E07C24",
+            },
+          }}
+        >
+          <RouterProvider router={router} />
+        </ConfigProvider>
+      </AppProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
