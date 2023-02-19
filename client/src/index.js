@@ -7,7 +7,6 @@ import Login from "./pages/Login";
 import "antd/dist/reset.css";
 import { ConfigProvider } from "antd";
 import Signup from "./pages/Signup";
-import AdminSignup from "./pages/AdminSignup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
   {
     path: "/admin/login",
     element: <AdminLogin />,
-  },
-  {
-    path: "/admin/signup",
-    element: <AdminSignup />,
   },
   {
     path: "/login",

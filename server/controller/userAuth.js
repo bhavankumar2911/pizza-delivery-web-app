@@ -2,8 +2,9 @@ const srs = require("secure-random-string");
 const validator = require("validator");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const { sendMail } = require("../services/auth");
+const { sendMail, attachLoginToken } = require("../services/auth");
 const VerificationCode = require("../models/VerificationCode");
+const { isEmail } = require("validator");
 
 module.exports = {
   signup: async (req, res) => {
@@ -113,6 +114,86 @@ module.exports = {
       return res.status(200).json({ message: "Email verified" });
     } catch (error) {
       return res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
+  login: async (req, res) => {
+    const { email, password } = req.body;
+
+    // validation
+    if (!email || !password)
+      return res
+        .status(400)
+        .json({ message: "Email and Password is required" });
+
+    if (!isEmail(email))
+      return res.status(400).json({ message: "Enter a valid email address" });
+
+    // check user
+    try {
+      const user = await User.findOne({ email });
+
+      if (!user)
+        return res.status(404).json({
+          message: "No account is registered with this email address",
+        });
+
+      if (!bcrypt.compareSync(password, user.password))
+        return res.status(400).json({
+          message: "Invalid credentials",
+        });
+
+      // check verified
+      if (!user.emailVerified) {
+        const verificationCode = srs({ length: 10 });
+
+        // save code in db
+        await VerificationCode.updateOne(
+          { userId: user._id },
+          { code: verificationCode }
+        );
+
+        // send email
+
+        const { success } = await sendMail(
+          email,
+          "Email Verification",
+          `Use this code ${verificationCode} to verify your email`,
+          `
+          <div>
+            <p>Use this code</p>
+            <h3>${verificationCode}</h3>
+            <p>to verify your email.</p>
+          </div>
+        `
+        );
+
+        if (!success)
+          return res.status(500).json({
+            message:
+              "You didn't verify your email. Something went wrong when resending you the verification code",
+          });
+
+        return res.status(400).json({
+          message: "Kindly verify your email address. Check your email inbox",
+          notVerified: true,
+          userId: user._id,
+        });
+      }
+
+      // sign token
+      attachLoginToken(res, {
+        email: user.email,
+        id: user._id,
+      });
+
+      // ack success
+      return res.status(200).json({
+        message: `Welcome ${user.name}!`,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+      });
     }
   },
 };

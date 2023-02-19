@@ -1,5 +1,6 @@
 const nodeMailer = require("nodemailer");
 const { google } = require("googleapis");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const {
@@ -8,13 +9,6 @@ const {
   GOOGLE_OAUTH_REFRESH_TOKEN,
   GOOGLE_MAIL_ADDRESS,
 } = process.env;
-
-console.log(
-  GOOGLE_OAUTH_CLIENT_ID,
-  GOOGLE_OAUTH_CLIENT_SECRET,
-  GOOGLE_OAUTH_REFRESH_TOKEN,
-  GOOGLE_MAIL_ADDRESS
-);
 
 // creating the oauth2 client
 const OAuth2Client = new google.auth.OAuth2(
@@ -67,4 +61,10 @@ const sendMail = async (email, subject, textBody, htmlBody) => {
   }
 };
 
+const attachLoginToken = async (res, payload) => {
+  const token = jwt.sign(payload, process.env.JWT_SECRET);
+  res.cookie("auth_token", token, { httpOnly: true });
+};
+
 module.exports.sendMail = sendMail;
+module.exports.attachLoginToken = attachLoginToken;

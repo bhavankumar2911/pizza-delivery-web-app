@@ -29,9 +29,6 @@ const AdminLogin = () => {
                 <p>
                   <Link to="/forgot-password">Forgot Password?</Link>
                 </p>
-                <p>
-                  New User? <Link to="/admin/signup">Sign Up</Link>
-                </p>
               </Space>
             </center>
           </form>
