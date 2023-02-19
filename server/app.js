@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 const userAuthRouter = require("./router/userAuth");
+const adminRouter = require("./router/admin");
 require("dotenv").config();
 
 const app = express();
@@ -25,5 +26,6 @@ mongoose
 
 // api
 app.use("/user", userAuthRouter);
+app.use("/admin", adminRouter);
 
 app.listen(9000, () => console.log("Server running on port " + 9000));

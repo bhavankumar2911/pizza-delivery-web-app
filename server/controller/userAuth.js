@@ -181,10 +181,14 @@ module.exports = {
       }
 
       // sign token
-      attachLoginToken(res, {
-        email: user.email,
-        id: user._id,
-      });
+      attachLoginToken(
+        res,
+        {
+          email: user.email,
+          id: user._id,
+        },
+        "auth_token"
+      );
 
       // ack success
       return res.status(200).json({

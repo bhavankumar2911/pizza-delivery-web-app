@@ -61,9 +61,9 @@ const sendMail = async (email, subject, textBody, htmlBody) => {
   }
 };
 
-const attachLoginToken = async (res, payload) => {
+const attachLoginToken = async (res, payload, cookieName) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET);
-  res.cookie("auth_token", token, { httpOnly: true });
+  res.cookie(cookieName, token, { httpOnly: true });
 };
 
 module.exports.sendMail = sendMail;
