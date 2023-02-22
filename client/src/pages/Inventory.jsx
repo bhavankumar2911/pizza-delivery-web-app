@@ -2,7 +2,6 @@ import { Divider, Space, Typography, Spin, Alert } from "antd";
 import React from "react";
 import Container from "../components/Container";
 import InventorySection from "../components/InventorySection";
-import inventory from "../inventory.json";
 import { useQuery } from "react-query";
 import axios from "axios";
 
