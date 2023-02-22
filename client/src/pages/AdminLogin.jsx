@@ -27,7 +27,7 @@ const AdminLogin = () => {
       const { data } = result;
       message.success(data.message);
       setTimeout(() => {
-        navigate(`/dashboard`);
+        navigate(`/admin/inventory`);
       }, 1500);
     },
   });
