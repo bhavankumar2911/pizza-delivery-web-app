@@ -28,6 +28,7 @@ const Login = () => {
       message.success(data.message);
       localStorage.setItem("user_email", data.email);
       localStorage.setItem("user_phone", data.phone);
+      localStorage.setItem("user_id", data.userId);
       setTimeout(() => {
         navigate(`/dashboard/${data.userId}`);
       }, 1500);

@@ -6,9 +6,11 @@ import { Button, List, Typography } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cart } = useAppContext();
+  const navigate = useNavigate();
   const { mutate } = useMutation(
     (data) => axios.post("/order/payment-initiate", data),
     {
@@ -30,7 +32,7 @@ const Cart = () => {
                 { ...rp, cart, amount: getAmountPayable() }
               );
 
-              console.log(verificationResponse);
+              navigate(`/dashboard/${localStorage.getItem("user_id")}`);
             } catch (error) {
               console.log(error);
             }

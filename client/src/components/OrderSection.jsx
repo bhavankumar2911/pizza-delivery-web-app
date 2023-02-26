@@ -1,13 +1,43 @@
-import { Typography, Table, Button } from "antd";
+import { Typography, Table, Button, message } from "antd";
+import axios from "axios";
 import React from "react";
-import orders from "../orders.json";
+import { useMutation } from "react-query";
 
-const OrderSection = ({ orderStatus, title }) => {
+const OrderSection = ({
+  orders,
+  title,
+  orderStatus,
+  tableData,
+  setTableData,
+}) => {
+  const { mutate } = useMutation(
+    (data) =>
+      axios.patch(`/order/update-status/${data.id}`, { status: data.status }),
+    {
+      onError: (err) => {
+        message.error(err.response.data.message);
+      },
+      onSuccess: (res) => {
+        console.log(res.data);
+        const orderId = res.data.order._id;
+        setTableData([
+          ...tableData.map((item) => {
+            if (item._id == orderId)
+              return { ...item, status: res.data.order.status };
+            else return { ...item };
+          }),
+        ]);
+        message.success(res.data.message);
+      },
+    }
+  );
   const columns = [
     {
       title: "Id",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "_id",
+      key: "_id",
+      textWrap: "word-break",
+      width: "10px",
     },
     {
       title: "Amount",
@@ -16,23 +46,23 @@ const OrderSection = ({ orderStatus, title }) => {
     },
     {
       title: "Customer Id",
-      dataIndex: "customer_id",
-      key: "customer_id",
+      dataIndex: "userId",
+      key: "userId",
     },
     {
       title: "Customer Email",
-      dataIndex: "customer_email",
-      key: "customer_email",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Customer Phone",
-      dataIndex: "customer_phone",
-      key: "customer_phone",
+      dataIndex: "phone",
+      key: "phone",
     },
     {
       title: "Customer Address",
-      dataIndex: "customer_address",
-      key: "customer_address",
+      dataIndex: "address",
+      key: "address",
     },
     {
       title: "Pizza",
@@ -47,22 +77,32 @@ const OrderSection = ({ orderStatus, title }) => {
   ];
 
   const actionColumn = {
-    new: {
-      title: "Action",
-      dataIndex: "mark",
-      key: "mark",
-      render: () => (
-        <Button type="primary" size="small">
-          Confirm
-        </Button>
-      ),
-    },
+    // new: {
+    //   title: "Action",
+    //   dataIndex: "mark",
+    //   key: "mark",
+    //   render: (_, record) => {
+    //     return (
+    //       <Button
+    //         type="primary"
+    //         size="small"
+    //         onClick={() => console.log(record._id)}
+    //       >
+    //         Cook
+    //       </Button>
+    //     );
+    //   },
+    // },
     received: {
       title: "Action",
       dataIndex: "mark",
       key: "mark",
-      render: () => (
-        <Button type="primary" size="small">
+      render: (_, record) => (
+        <Button
+          type="primary"
+          size="small"
+          onClick={() => mutate({ id: record._id, status: "cooking" })}
+        >
           Cook
         </Button>
       ),
@@ -71,8 +111,12 @@ const OrderSection = ({ orderStatus, title }) => {
       title: "Action",
       dataIndex: "mark",
       key: "mark",
-      render: () => (
-        <Button type="primary" size="small">
+      render: (_, record) => (
+        <Button
+          type="primary"
+          size="small"
+          onClick={() => mutate({ id: record._id, status: "delivered" })}
+        >
           Dispatch
         </Button>
       ),
@@ -88,7 +132,7 @@ const OrderSection = ({ orderStatus, title }) => {
       <br />
       <Table
         pagination={false}
-        dataSource={orders.filter((order) => order.status == orderStatus)}
+        dataSource={orders}
         columns={
           orderStatus == "delivered"
             ? columns
