@@ -26,8 +26,10 @@ const Login = () => {
     onSuccess: (result) => {
       const { data } = result;
       message.success(data.message);
+      localStorage.setItem("user_email", data.email);
+      localStorage.setItem("user_phone", data.phone);
       setTimeout(() => {
-        navigate(`/dashboard`);
+        navigate(`/dashboard/${data.userId}`);
       }, 1500);
     },
   });

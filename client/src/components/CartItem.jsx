@@ -2,6 +2,7 @@ import { Col, Row, List, Select, Typography, Space, Input, Button } from "antd";
 import React from "react";
 import { PlusOutlined, MinusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useAppContext } from "../providers/App";
+import convertStockIdToName from "../helpers/convertStockIdToName";
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useAppContext();
@@ -9,9 +10,13 @@ const CartItem = ({ item }) => {
   return (
     <List.Item>
       <div>
-        <Typography.Title level={5}>{item.name}</Typography.Title>
+        <Typography.Title level={5}>
+          {item.name} (Rs. {item.price * item.quantity})
+        </Typography.Title>
         <Typography.Text type="secondary">
-          {item.cheese}, {item.base}, {item.sauce}{" "}
+          {convertStockIdToName("cheese", item.cheese)} cheese,{" "}
+          {convertStockIdToName("base", item.base)} base,{" "}
+          {convertStockIdToName("sauce", item.sauce)} sauce{" "}
           {item.wantVeggies ? ", Veggies" : ""}
         </Typography.Text>
         <br />

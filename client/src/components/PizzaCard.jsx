@@ -15,9 +15,9 @@ const { Meta } = Card;
 const PizzaCard = ({ pizza }) => {
   const { addToCart } = useAppContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [base, setBase] = useState("Thin Crust");
-  const [sauce, setSauce] = useState("Pesto Sauce");
-  const [cheese, setCheese] = useState("Mozzarella Cheese");
+  const [base, setBase] = useState("63f38e2b035ed7e9f844522c");
+  const [sauce, setSauce] = useState("63f3903e035ed7e9f844522f");
+  const [cheese, setCheese] = useState("63f3914d035ed7e9f8445233");
   const [wantVeggies, setWantVeggies] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const carousel = useRef();
@@ -110,9 +110,9 @@ const PizzaCard = ({ pizza }) => {
             <Typography.Title level={3}>Choose the base</Typography.Title>
             <Radio.Group onChange={onBaseChange} value={base}>
               <Space direction="vertical">
-                <Radio value="Thin Crust">Thin Crust</Radio>
-                <Radio value="Thick Crust">Thick Crust</Radio>
-                <Radio value="Stuffed Crust">Stuffed Crust</Radio>
+                <Radio value="63f38e2b035ed7e9f844522c">Thin Crust</Radio>
+                <Radio value="63f38f1b035ed7e9f844522d">Thick Crust</Radio>
+                <Radio value="63f38f4b035ed7e9f844522e">Stuffed Crust</Radio>
               </Space>
             </Radio.Group>
           </div>
@@ -123,10 +123,14 @@ const PizzaCard = ({ pizza }) => {
               value={sauce}
             >
               <Space direction="vertical">
-                <Radio value="Pesto Sauce">Pesto</Radio>
-                <Radio value="White Garlic Sauce">White Garlic Sauce</Radio>
-                <Radio value="Garlic Ranch Sauce">Garlic Ranch Sauce</Radio>
-                <Radio value="Buffalo Sauce">Buffalo Sauce</Radio>
+                <Radio value="63f3903e035ed7e9f844522f">Pesto</Radio>
+                <Radio value="63f3905b035ed7e9f8445230">
+                  White Garlic Sauce
+                </Radio>
+                <Radio value="63f39086035ed7e9f8445231">
+                  Garlic Ranch Sauce
+                </Radio>
+                <Radio value="63f390c7035ed7e9f8445232">Buffalo Sauce</Radio>
               </Space>
             </Radio.Group>
           </div>
@@ -137,10 +141,10 @@ const PizzaCard = ({ pizza }) => {
               value={cheese}
             >
               <Space direction="vertical">
-                <Radio value="Mozzarella Cheese">Mozzarella</Radio>
-                <Radio value="Cheddar Cheese">Cheddar</Radio>
-                <Radio value="Parmesan Cheese">Parmesan</Radio>
-                <Radio value="Goat Cheese">Goat Cheese</Radio>
+                <Radio value="63f3914d035ed7e9f8445233">Mozzarella</Radio>
+                <Radio value="63f39194035ed7e9f8445234">Cheddar</Radio>
+                <Radio value="63f391ac035ed7e9f8445235">Parmesan</Radio>
+                <Radio value="63f391cf035ed7e9f8445236">Goat Cheese</Radio>
               </Space>
             </Radio.Group>
           </div>

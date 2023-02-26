@@ -12,7 +12,6 @@ const Inventory = () => {
     "inventory",
     fetchInventory
   );
-
   if (isLoading)
     return (
       <center>

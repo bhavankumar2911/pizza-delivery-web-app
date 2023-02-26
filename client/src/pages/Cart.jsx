@@ -4,9 +4,60 @@ import Container from "../components/Container";
 import { useAppContext } from "../providers/App";
 import { Button, List, Typography } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const Cart = () => {
   const { cart } = useAppContext();
+  const { mutate } = useMutation(
+    (data) => axios.post("/order/payment-initiate", data),
+    {
+      onError: (err) => console.log(err),
+      onSuccess: (response) => {
+        const { order } = response.data;
+        console.log(response);
+        const options = {
+          key: process.env.REACT_APP_RAZORPAY_KEY,
+          amount: order.amount,
+          currency: order.currency,
+          order_id: order.id,
+          name: "Pizza Delivery",
+          handler: async (rp) => {
+            console.log(rp);
+            try {
+              const verificationResponse = await axios.post(
+                "/order/payment-verify",
+                { ...rp, cart, amount: getAmountPayable() }
+              );
+
+              console.log(verificationResponse);
+            } catch (error) {
+              console.log(error);
+            }
+          },
+          theme: {
+            color: "#E07C24",
+          },
+          prefill: {
+            email: localStorage.getItem("user_email"),
+            contact: localStorage.getItem("user_phone"),
+          },
+        };
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      },
+    }
+  );
+
+  function getAmountPayable() {
+    return cart.reduce((total, item) => {
+      return (total += item.price * item.quantity);
+    }, 0);
+  }
+
+  const handleCheckout = () => {
+    mutate({ amount: getAmountPayable() });
+  };
 
   return (
     <main>
@@ -25,10 +76,18 @@ const Cart = () => {
             renderItem={(item) => <CartItem item={item} />}
           />
 
+          <center>
+            <br />
+            <Typography.Title level={4}>
+              Amount payable: Rs. {getAmountPayable()}
+            </Typography.Title>
+          </center>
+
           <Button
             style={{ marginTop: "2rem" }}
             icon={<ShoppingCartOutlined />}
             type="primary"
+            onClick={handleCheckout}
             block
           >
             Checkout

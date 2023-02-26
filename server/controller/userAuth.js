@@ -186,6 +186,8 @@ module.exports = {
         {
           email: user.email,
           id: user._id,
+          phone: user.phone,
+          address: user.address,
         },
         "auth_token"
       );
@@ -193,6 +195,9 @@ module.exports = {
       // ack success
       return res.status(200).json({
         message: `Welcome ${user.name}!`,
+        userId: user._id,
+        email: user.email,
+        phone: user.phone,
       });
     } catch (error) {
       return res.status(500).json({
